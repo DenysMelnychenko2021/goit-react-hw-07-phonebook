@@ -1,23 +1,22 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { nanoid } from 'nanoid';
 import s from './ContactForm.module.css';
 
 import { ContactInputs } from 'components/contactInputs';
 
 export const ContactForm = ({ onAddContact }) => {
-  const [inputName, setInputName] = useState('');
-  const [inputNumber, setInputNumber] = useState('');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
   const [agreed, setAgreed] = useState(false);
 
   const handleChange = e => {
     const { name, value, checked } = e.currentTarget;
     switch (name) {
-      case 'inputName':
-        setInputName(value);
+      case 'name':
+        setName(value);
         break;
-      case 'inputNumber':
-        setInputNumber(value);
+      case 'phone':
+        setPhone(value);
         break;
       case 'agreed':
         setAgreed(checked);
@@ -29,21 +28,21 @@ export const ContactForm = ({ onAddContact }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    onAddContact({ id: nanoid(), inputName, inputNumber, agreed });
+    onAddContact({ name, phone, agreed });
     resetForm();
   };
 
   const resetForm = () => {
-    setInputName('');
-    setInputNumber('');
+    setName('');
+    setPhone('');
     setAgreed(false);
   };
 
   return (
     <form className={s.Box} onSubmit={handleSubmit}>
       <ContactInputs
-        inputName={inputName}
-        inputNumber={inputNumber}
+        inputName={name}
+        inputNumber={phone}
         handleChange={handleChange}
       />
 
